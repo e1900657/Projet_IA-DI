@@ -22,7 +22,7 @@ import sys
 
 # Vérifier si le nombre d'arguments est suffisant
 if len(sys.argv) != 3:
-    print("Usage: python script.py <path_pickle_train> <path_pickle_test>")
+    print("Usage: python challenge_1.py <path_pickle_train> <path_pickle_test>")
     sys.exit(1)
 
 # Chemins des fichiers d'entrée et de sortie à partir des arguments de ligne de commande
