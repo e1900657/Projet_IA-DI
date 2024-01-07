@@ -44,8 +44,66 @@ def lire_fichier_config(chemin_fichier = "config.txt"):
 
     return config_functions
 
+# Fonction de conversion pour les int
+def convert_to_int(string, flow_dict, tag):
+    string = str(string).strip()
+    flow_dict[tag + '_int'] = int(float(string))
+    return flow_dict
+
+# Fonction de conversion pour duration
+def convert_duration_to_int(duration, flow_dict, tag):
+    duration = str(duration).strip()
+    flow_dict[tag + '_int'] = int(float(duration) * 1000)
+    return flow_dict
+
+# Fonction pour attribuer une valeur en fonction des protocoles
+def convert_protocol_en_entier(protocol, flow_dict, tag):
+    protocol = str(protocol).strip()
+    flags = ['UDP', 'TCP']
+    # Initialisez toutes les valeurs à 0
+    for flag in flags:
+        flow_dict[tag + '_' + flag + '_int'] = 0
+
+    if protocol is not None:
+        if protocol in flags:
+            flow_dict[tag + '_' + protocol + '_int'] = 1
+        else
+            print(f"Protocol inconnu : {prtocol}")
+
+    return flow_dict
+
+def convert_bytes_to_int(bytes_value, flow_dict, tag):
+    string_value = bytes_value.decode("utf-8").strip()
+    try:
+        int_value = int(string_value)
+    except ValueError:
+        try:
+            int_value = int(float(string_value))
+        except ValueError:
+            int_value = None  # Ou une autre valeur par défaut si nécessaire
+    
+    flow_dict[tag + '_int'] = int_value
+    return flow_dict
 
 
+def convert_tcp_flags_en_entier_challenge_2(tcp_flags, flow_dict, tag):
+    # Initialisez toutes les valeurs à 0
+    for flag in ['F', 'S', 'R', 'A', 'P', 'Illegal8','Illegal7','U']:
+        flow_dict[tag + '_' + flag + '_int'] = 0
+
+    if tcp_flags != "N/A" and tcp_flags is not None:
+        tcp_flags = str(tcp_flags).replace('.','')
+        flags = list(tcp_flags)
+        for flag in flags:
+            flag = flag.strip()
+            if flag in ['F', 'S', 'R', 'A', 'P', 'Illegal8','Illegal7','U']:
+                flow_dict[tag + '_' + flag + '_int'] = 1
+            else:
+                print(f"Drapeau TCP inconnu : {flag}")
+
+    return flow_dict
+
+    
 # Fonction de conversion pour les valeurs de type chaîne
 def convert_string_en_entier(string_value, flow_dict, tag, max_int_size=2**31 - 1):
     try:
@@ -137,9 +195,18 @@ def convert_tag_en_entier(tag_string, flow_dict, tag):
     if tag_string is not None:  # Vérification pour éviter les valeurs None
         if tag_string == 'Attack':
             flow_dict[tag + '_int'] = 1
+        elif tag_string == 'normal':
+            flow_dict[tag + '_int'] = 0
+        elif tag_string == 'attacker':
+            flow_dict[tag + '_int'] = 1
+        elif tag_string == 'victim':
+            flow_dict[tag + '_int'] = 2
         else:
             flow_dict[tag + '_int'] = 0
     return flow_dict
+
+
+
 
 
 # Fonction de conversion pour les chaînes UTF-8
@@ -175,7 +242,7 @@ if __name__ == "__main__":
             root_element = root.tag
     
             # Loop through the flow elements and convert each flow to a dictionary
-            for flow_elem in root.xpath("//TestbedMonJun14Flows | //TestbedSatJun12 | //TestbedSunJun13Flows | //TestbedThuJun17-1Flows | //TestbedThuJun17-2Flows | //TestbedTueJun15-1Flows | //TestbedTueJun15-2Flows | //TestbedWedJun16-1Flows | //TestbedWedJun16-2Flows"):
+            for flow_elem in root.xpath("//*"):
                 flow_dict = {}
                 for child_elem in flow_elem.getchildren():
                     flow_dict[child_elem.tag] = int(child_elem.text) if child_elem.tag.endswith(("Bytes", "Packets", "Port")) else child_elem.text
