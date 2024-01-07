@@ -198,7 +198,7 @@ if True:
         res = {
             'preds': list(predictions),
             'probs': probabilities,
-            'names': ['JOSSET', 'GARIN-HAMELINE'],  # Remplacez par vos noms d'équipe
+            'names': ['XX', 'XX'],  # Remplacez par vos noms d'équipe
             'method': selected_classifier,  # Remplacez par le nom de votre méthode
             'version': '1'  # Remplacez par votre numéro de version
         }
