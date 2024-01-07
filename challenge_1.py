@@ -203,10 +203,10 @@ else:
         res = {
             'preds': list(predictions),
             'probs': class_probabilities.tolist(),
-            'names': ['JOSSET', 'GARIN-HAMELINE'],  # Remplacez par vos noms d'équipe
+            'names': ['XX', 'XX'],  # Remplacez par vos noms d'équipe
             'method': selected_classifier,  # Remplacez par le nom de votre méthode
             'appName': user_input,  # L'appName choisi par l'utilisateur
-            'version': '3'  # Remplacez par votre numéro de version
+            'version': '1'  # Remplacez par votre numéro de version
         }
 
         # Vérifie que le nombre de prédictions et de probabilités correspond au nombre de lignes dans les données de test
