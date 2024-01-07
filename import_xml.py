@@ -10,13 +10,15 @@ import base64
 import hashlib
 import pickle
 
-# Vérifier si le chemin du dossier est passé en argument
-if len(sys.argv) != 2:
-    print("Usage: python import_xml.py <path_to_folder_with_xml>")
+if len(sys.argv) != 3:
+    print("Usage: python import_xml.py <path_to_folder_with_xml> <output_filename>")
     sys.exit(1)
 
 # Dossier contenant les fichiers XML
 folder_path = sys.argv[1]
+output_filename = sys.argv[2]
+output_filename = output_filename.replace('.pkl','')
+
 noms_applications_uniques = {}
 compteur_entiers_uniques = 1
 
@@ -195,12 +197,6 @@ if __name__ == "__main__":
     df = pd.DataFrame(data_list)
     
     # Sauvegarder le DataFrame dans un fichier pickle
-    df.to_pickle("data.pkl")
+    df.to_pickle(output_filename + ".pkl")
     
-    print("Data has been processed and saved to 'data.pkl'.")
-    
-    
-    with open("noms_applications_uniques.pkl", "wb") as fichier_pickle:
-        pickle.dump(noms_applications_uniques, fichier_pickle)
-    
-    print("Dictionnaire a été sauvegardé sous 'noms_applications_uniques.pkl'.")
+    print(f"Data has been processed and saved to '{output_filename}.pkl'.")
