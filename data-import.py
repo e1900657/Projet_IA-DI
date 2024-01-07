@@ -53,12 +53,12 @@ def init_elasticsearch_connection():
 
     es = Elasticsearch(
         "https://localhost:9200",
-        api_key="YWc1S19Jb0J0eTJER2htaFBwZ2s6T3lGY2twMGVTLWFBWC1GcWg2d2NFQQ==",
+        api_key="YOUR API-KEY==",
         ca_certs="http_ca.crt"
     )
     
     if not es.ping():
-        ELASTIC_PASSWORD = "julien"
+        ELASTIC_PASSWORD = "XX"
         es = Elasticsearch(['https://localhost:9200'], basic_auth=('elastic', ELASTIC_PASSWORD), verify_certs=False)
         
         if not es.ping():
